@@ -1,0 +1,7 @@
+
+extern void HXT_Editor_V100_INITIAL();
+extern void HXT_Editor_V100();
+
+extern unsigned char IIC_USER_DATA[];
+extern unsigned char IIC_GlobalOption[];
+

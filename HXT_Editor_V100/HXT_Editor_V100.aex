@@ -1,0 +1,6 @@
+
+EXTERN	_HXT_Editor_V100_INITIAL:near
+EXTERN	_HXT_Editor_V100:near
+
+;;;;;EXTERN	_IIC_USER_DATA:byte
+;;;;;EXTERN	_IIC_GlobalOption:byte

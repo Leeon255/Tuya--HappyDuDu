@@ -1,0 +1,642 @@
+文件：HXT_Editor_V100.asm 编译器版本 2.98 页次1
+
+
+   1  0000              message '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - '
+   2  0000              message '<      HXT_Editor_V100.asm     >'
+   3  0000                      INCLUDE HXT_Editor_V100.INC
+
+
+
+
+
+
+
+
+
+
+
+
+   4  0000              PUBLIC  _HXT_Editor_V100
+   5  0000              PUBLIC  _HXT_Editor_V100_INITIAL
+   6  0000              
+   7  0000              
+   8  0000                      #define IIC_ADDRESS 0A0H
+   9  0000              
+  10  0000                      ;#define IIC_TH_LEN 16
+  11  0000              
+  12  0000              IFNDEF IIC_TH_LEN
+  13  0000                      IFDEF	TKM7C0
+  14  0000                      	IFNDEF _TKM_
+  15  0000                      	#define _TKM_   8
+  16  0000                      	ENDIF
+  17  0000                      ENDIF
+  18  0000                      IFDEF	TKM6C0
+  19  0000                      	IFNDEF _TKM_
+  20  0000                      	#define _TKM_   7
+  21  0000                      	ENDIF
+  22  0000                      ENDIF
+  23  0000                      IFDEF	TKM5C0
+  24  0000                      	IFNDEF _TKM_
+  25  0000                      	#define _TKM_   6
+  26  0000                      	ENDIF
+  27  0000                      ENDIF
+  28  0000                      IFDEF	TKM4C0
+  29  0000                      	IFNDEF _TKM_
+  30  0000                      	#define _TKM_   5
+  31  0000                      	ENDIF
+  32  0000                      ENDIF
+  33  0000                      IFDEF	TKM3C0
+  34  0000                      	IFNDEF _TKM_
+  35  0000                      	#define _TKM_   4
+  36  0000                      	ENDIF
+  37  0000                      ENDIF
+  38  0000                      IFDEF	TKM2C0
+  39  0000                      	IFNDEF _TKM_
+  40  0000                      	#define _TKM_   3
+  41  0000                      	ENDIF
+  42  0000                      ENDIF
+  43  0000                      IFDEF	TKM1C0
+  44  0000                      	IFNDEF _TKM_
+  45  0000                      	#define _TKM_   2
+  46  0000                      	ENDIF
+  47  0000                      ENDIF
+文件：HXT_Editor_V100.asm 编译器版本 2.98 页次2
+
+  48  0000                      IFDEF	TKM0C0
+  49  0000                      	IFNDEF _TKM_
+  50  0000                      	#define _TKM_   1
+  51  0000                      	ENDIF
+  52  0000                      ENDIF
+  53  0000              
+  54  0000              
+  55  0000              
+  56  0000                      IFNDEF  _TKM_
+  57  0000                          ERRmessage  '_TKM_ Not define'
+  58  0000                      ELSE
+  59  0000                          #define IIC_TH_LEN  (_TKM_*4)
+  60  0000                      ENDIF
+  61  0000              ENDIF
+  62  0000              
+  63  0000              
+  64  0000              
+  65  0000              
+  66  0000              
+  67  0000              ;*******************************************************************
+  68  0000              #define CMD_R_Lib_VersionL  00H
+  69  0000              #define CMD_R_Lib_VersionH  01H
+  70  0000              #define CMD_R_KeyAmount 02H
+  71  0000              #define CMD_R_EE_Status 03H
+  72  0000              #define CMD_R_TK_Select0    04H
+  73  0000              #define CMD_R_KeyStatus0    08H
+  74  0000              #define CMD_R_K1_Freq   010H
+  75  0000              #define CMD_R_K1_Ref    050H
+  76  0000              #define CMD_R_K1_Offset 090H
+  77  0000              #define CMD_R_K1_RCC    0B0H
+  78  0000              
+  79  0000              #define CMD_RW_Global   0D0H
+  80  0000              #define CMD_RW_DeviceA  CMD_RW_Global+0
+  81  0000              #define CMD_RW_DeviceB  CMD_RW_Global+1
+  82  0000              #define CMD_RW_KeyAmount    CMD_RW_Global+2
+  83  0000              #define CMD_RW_OptionA  CMD_RW_Global+3
+  84  0000              #define CMD_RW_OptionB  CMD_RW_Global+4
+  85  0000              #define CMD_RW_OptionC  CMD_RW_Global+5
+  86  0000              ;#define    CMD_RW_     CMD_RW_Global+6
+  87  0000              ;#define    CMD_RW_     CMD_RW_Global+7
+  88  0000              #define CMD_RW_K1_TH    CMD_RW_Global+8
+  89  0000              
+  90  0000              
+  91  0000              ;;;;;#define    CMD_R_Lib_VersionL  00H
+  92  0000              ;;;;;#define    CMD_R_Lib_VersionH  01H
+  93  0000              ;;;;;#define    CMD_R_KeyAmount 02H
+  94  0000              ;;;;;#define    CMD_R_EE_Status 03H
+  95  0000              ;;;;;#define    CMD_R_TK_Select0    04H
+  96  0000              ;;;;;#define    CMD_R_KeyStatus0    08H
+  97  0000              ;;;;;#define    CMD_R_K1_Freq   010H
+  98  0000              ;;;;;#define    CMD_R_K1_Ref    050H
+  99  0000              ;;;;;#define    CMD_R_K1_RCC    090H
+ 100  0000              ;;;;;
+ 101  0000              ;;;;;#define    CMD_RW_Global   0B0H
+ 102  0000              ;;;;;#define    CMD_RW_B0       CMD_RW_Global+0
+ 103  0000              ;;;;;#define    CMD_RW_B1       CMD_RW_Global+1
+ 104  0000              ;;;;;#define    CMD_RW_OptionA  CMD_RW_Global+2
+ 105  0000              ;;;;;#define    CMD_RW_OptionB  CMD_RW_Global+3
+ 106  0000              ;;;;;#define    CMD_RW_OptionC  CMD_RW_Global+4
+ 107  0000              ;;;;;#define    CMD_RW_K1_TH    CMD_RW_Global+5
+文件：HXT_Editor_V100.asm 编译器版本 2.98 页次3
+
+ 108  0000              ;*********************************************************************
+ 109  0000              
+ 110  0000              
+ 111  0000              
+ 112  0000              
+ 113  0000              
+ 114  0000              ;;;;;;*******************************************************************
+ 115  0000              RAMBANK 0 IIC_SLAVE_TEST_RW_RAM
+ 116  0000              IIC_SLAVE_TEST_RW_RAM       .SECTION  'DATA'
+ 117  0000  0002[       IIC_STACK   DB 2 DUP(?)
+            00
+            ]
+ 118  0002              ;*******************************************************************
+ 119  0000              IIC_SLAVE_TEST_RW_CODE    .SECTION  'CODE'
+ 120  0000              ;;;;;IIC_WRITE_ENTRY PROC
+ 121  0000              ;;;;;        JMP END_IIC_RW
+ 122  0000              ;;;;;IIC_WRITE_ENTRY ENDP
+ 123  0000              ;================================================================
+ 124  0000              
+ 125  0000              ;*******************************************************************
+ 126  0000              
+ 127  0000              ;*******************************************************************
+ 128  0000              IIC_PRE_READ PROC
+ 129  0000  0703                MOV     A,MP1
+ 130  0001  0080     R          MOV     IIC_STACK[0],A
+ 131  0002  0704                MOV     A,BP
+ 132  0003  0080     R          MOV     IIC_STACK[1],A
+ 133  0004  1F00     R          CLR     IIC_DATA_OUT
+ 134  0005              ;================================================================
+ 135  0005              
+ 136  0005  0700     R          MOV     A,IIC_DATA_INDEX
+ 137  0006  0AD8                SUB     A,CMD_RW_K1_TH
+ 138  0007  3C0A                SZ      C
+ 139  0008  2800     R          JMP     IIC_READ_KEY_TH
+ 140  0009              
+ 141  0009  0700     R          MOV     A,IIC_DATA_INDEX
+ 142  000A  0AD0                SUB     A,CMD_RW_Global
+ 143  000B  3C0A                SZ      C
+ 144  000C  2800     R          JMP     IIC_READ_Setting
+ 145  000D              
+ 146  000D  0700     R          MOV     A,IIC_DATA_INDEX
+ 147  000E  0AB0                SUB     A,CMD_R_K1_RCC
+ 148  000F  3C0A                SZ      C
+ 149  0010  2800     R          JMP     IIC_READ_RCC
+ 150  0011              
+ 151  0011  0700     R          MOV     A,IIC_DATA_INDEX
+ 152  0012  0A90                SUB     A,CMD_R_K1_OFFSET
+ 153  0013  3C0A                SZ      C
+ 154  0014  2800     R          JMP     END_IIC_RW
+ 155  0015              
+ 156  0015  0700     R          MOV     A,IIC_DATA_INDEX
+ 157  0016  0A50                SUB     A,CMD_R_K1_Ref
+ 158  0017  3C0A                SZ      C
+ 159  0018  2800     R          JMP     IIC_READ_REF
+ 160  0019              
+ 161  0019  0700     R          MOV     A,IIC_DATA_INDEX
+ 162  001A  0A10                SUB     A,CMD_R_K1_Freq
+ 163  001B  3C0A                SZ      C
+ 164  001C  2800     R          JMP     IIC_READ_FREQ
+ 165  001D              
+文件：HXT_Editor_V100.asm 编译器版本 2.98 页次4
+
+ 166  001D  0700     R          MOV     A,IIC_DATA_INDEX
+ 167  001E  0A08                SUB     A,CMD_R_KeyStatus0
+ 168  001F  3C0A                SZ      C
+ 169  0020  2800     R          JMP     IIC_READ_STATUS
+ 170  0021              
+ 171  0021  0700     R          MOV     A,IIC_DATA_INDEX
+ 172  0022  0A04                SUB     A,CMD_R_TK_Select0
+ 173  0023  3C0A                SZ      C
+ 174  0024  2800     R          JMP     IIC_READ_TK_SEL
+ 175  0025              
+ 176  0025  0700     R          MOV     A,IIC_DATA_INDEX
+ 177  0026  0C03                XOR     A,CMD_R_EE_Status
+ 178  0027  390A                SNZ     Z
+ 179  0028  2800     R          JMP     $+4
+ 180  0029  0F00                MOV     A,0
+ 181  002A  0080     R          MOV     IIC_DATA_OUT,A
+ 182  002B  2800     R          JMP     END_IIC_RW
+ 183  002C              
+ 184  002C  0700     R          MOV     A,IIC_DATA_INDEX
+ 185  002D  0C02                XOR     A,CMD_R_KeyAmount
+ 186  002E  390A                SNZ     Z
+ 187  002F  2800     R          JMP     $0
+ 188  0030  0F0C                MOV     A,IIC_TH_LEN
+ 189  0031  0080     R          MOV     IIC_DATA_OUT,A
+ 190  0032  2800     R          JMP     END_IIC_RW
+ 191  0033                  $0:
+ 192  0033  0700     R          MOV     A,IIC_DATA_INDEX
+ 193  0034  0C01                XOR     A,CMD_R_Lib_VersionH
+ 194  0035  390A                SNZ     Z
+ 195  0036  2800     R          JMP     $1
+ 196  0037  0700     R          MOV     A,IIC_LibVer[1]
+ 197  0038  0080     R          MOV     IIC_DATA_OUT,A
+ 198  0039  2800     R          JMP     END_IIC_RW
+ 199  003A                  $1:
+ 200  003A  1080     R          SZ      IIC_DATA_INDEX
+ 201  003B  2800     R          JMP     END_IIC_RW
+ 202  003C  0700     R          MOV     A,IIC_LibVer[0]
+ 203  003D  0080     R          MOV     IIC_DATA_OUT,A
+ 204  003E  2800     R          JMP     END_IIC_RW
+ 205  003F                  IIC_READ_KEY_TH:
+ 206  003F  0B00     E                  ADD     A,OFFSET        _GLOBE_VARIES+3
+ 207  0040  0083                        MOV     MP1,A
+ 208  0041  0F00     E                  MOV     A,BANK  _GLOBE_VARIES
+ 209  0042  0084                        MOV     BP,A
+ 210  0043  2800     R                  JMP     IIC_PRELOAD_DATA
+ 211  0044                  IIC_READ_Setting:
+ 212  0044  0B00     E                  ADD     A,OFFSET        _GLOBE_VARIES
+ 213  0045  0083                        MOV     MP1,A
+ 214  0046  0F00     E                  MOV     A,BANK  _GLOBE_VARIES
+ 215  0047  0084                        MOV     BP,A
+ 216  0048  2800     R                  JMP     IIC_PRELOAD_DATA
+ 217  0049                  IIC_READ_STATUS:
+ 218  0049  0B00     E                  ADD     A,OFFSET    _KEY_DATA
+ 219  004A  0083                        MOV     MP1,A
+ 220  004B  0F00     E                  MOV     A,BANK  _KEY_DATA
+ 221  004C  0084                        MOV     BP,A
+ 222  004D  2800     R                  JMP     IIC_PRELOAD_DATA
+ 223  004E                  IIC_READ_TK_SEL:
+ 224  004E  0B00     E                  ADD     A,OFFSET    _KEY_IO_SEL
+ 225  004F  0083                        MOV     MP1,A
+文件：HXT_Editor_V100.asm 编译器版本 2.98 页次5
+
+ 226  0050  0F00     E                  MOV     A,BANK  _KEY_IO_SEL
+ 227  0051  0084                        MOV     BP,A
+ 228  0052              
+ 229  0052  0702                        MOV     A,IAR1
+ 230  0053  0CFF                        XOR     A,0FFH
+ 231  0054  0080     R                  MOV     IIC_DATA_OUT,A
+ 232  0055  2800     R                  JMP     END_IIC_RW
+ 233  0056              
+ 234  0056                  IIC_READ_RCC:
+ 235  0056  1885                        RL      ACC
+ 236  0057  1885                        RL      ACC
+ 237  0058                              ;;ADD A,3
+ 238  0058  0B00     E                  ADD     A,OFFSET    _KEY_REF + 3
+ 239  0059  0083                        MOV     MP1,A
+ 240  005A  0F00     E                  MOV     A,BANK  _KEY_REF
+ 241  005B  0084                        MOV     BP,A
+ 242  005C  2800     R                  JMP     IIC_PRELOAD_DATA
+ 243  005D                                  ;----------------
+ 244  005D                  IIC_READ_FREQ:  ;-READ KEY FREQ -
+ 245  005D                                  ;----------------
+ 246  005D  1885                        RL      ACC
+ 247  005E  0B00     E                  ADD     A,OFFSET    _KEY_REF + 1
+ 248  005F                              ;; INC ACC
+ 249  005F  0083                        MOV     MP1,A
+ 250  0060  0F00     E                  MOV     A,BANK  _KEY_REF
+ 251  0061  0084                        MOV     BP,A
+ 252  0062              
+ 253  0062                              ;....V412.....
+ 254  0062                              ;ADD    A,OFFSET    _KEY_FREQ
+ 255  0062                              ;MOV    MP1,A
+ 256  0062                              ;MOV    A,BANK  _KEY_FREQ
+ 257  0062                              ;MOV    BP,A
+ 258  0062                              ;.............
+ 259  0062              
+ 260  0062  2800     R                  JMP     IIC_READ_FREQ_REF
+ 261  0063                                  ;----------------
+ 262  0063                  IIC_READ_REF:   ;-READ REFERENCE-
+ 263  0063                                  ;----------------
+ 264  0063  1885                        RL      ACC
+ 265  0064  0EFC                        AND     A,11111100B
+ 266  0065  0B00     E                  ADD     A,OFFSET    _KEY_REF
+ 267  0066  0083                        MOV     MP1,A
+ 268  0067  0F00     E                  MOV     A,BANK  _KEY_REF
+ 269  0068  0084                        MOV     BP,A
+ 270  0069                      IIC_READ_FREQ_REF:
+ 271  0069  3C00     R                  SZ      IIC_DATA_INDEX.0
+ 272  006A  2800     R                  JMP     IIC_READ_FREQ_REF_HIGH_BYTE
+ 273  006B  0702                        MOV     A,IAR1
+ 274  006C  0080     R                  MOV     IIC_DATA_OUT,A
+ 275  006D              
+ 276  006D                              ;....V412.....
+ 277  006D                              ;INC    MP1
+ 278  006D                              ;MOV    A,IAR1
+ 279  006D                              ;MOV    IIC_DATA_IN,A
+ 280  006D                              ;.............
+ 281  006D  2800     R                  JMP END_IIC_RW
+ 282  006E                      IIC_READ_FREQ_REF_HIGH_BYTE:
+ 283  006E                              ;....V412.....
+ 284  006E                              ;MOV    A,IIC_DATA_IN
+ 285  006E                              ;AND    A,0FH
+文件：HXT_Editor_V100.asm 编译器版本 2.98 页次6
+
+ 286  006E                              ;MOV    IIC_DATA_OUT,A
+ 287  006E                              ;.............
+ 288  006E              
+ 289  006E                              ;....V413.....
+ 290  006E  1F00     R                  CLR     IIC_DATA_OUT
+ 291  006F                              ;.............
+ 292  006F              
+ 293  006F  2800     R                  JMP     END_IIC_RW
+ 294  0070                  IIC_PRELOAD_DATA:;-IIC PRE-LOAD DATA
+ 295  0070  0702                        MOV     A,IAR1
+ 296  0071  0080     R                  MOV     IIC_DATA_OUT,A
+ 297  0072              ;================================================================
+ 298  0072              END_IIC_RW:
+ 299  0072  0700     R          MOV     A,IIC_STACK[1]
+ 300  0073  0084                MOV     BP,A
+ 301  0074  0700     R          MOV     A,IIC_STACK[0]
+ 302  0075  0083                MOV     MP1,A
+ 303  0076  2800     R          JMP     _ENDIIC
+ 304  0077              IIC_PRE_READ ENDP
+ 305  0077              ;*******************************************************************
+ 306  0077              
+ 307  0077              
+ 308  0077              
+ 309  0077              
+ 310  0077              
+ 311  0077              
+ 312  0077              
+ 313  0077              
+ 314  0077              
+ 315  0077              
+ 316  0077              
+ 317  0077              
+ 318  0077              
+ 319  0077              
+ 320  0077              
+ 321  0077              
+ 322  0077              
+ 323  0077              
+ 324  0077              
+ 325  0077              
+ 326  0077              
+ 327  0077              
+ 328  0077              
+ 329  0077              
+ 330  0077              
+ 331  0077              
+ 332  0077              
+ 333  0077              
+ 334  0077              
+ 335  0077              
+ 336  0077              
+ 337  0077              
+ 338  0077              
+ 339  0077              
+ 340  0077              
+ 341  0077              
+ 342  0077              
+ 343  0077              
+ 344  0077              
+ 345  0077              
+文件：HXT_Editor_V100.asm 编译器版本 2.98 页次7
+
+ 346  0077              
+ 347  0077              
+ 348  0077              
+ 349  0077              
+ 350  0077              
+ 351  0077              
+ 352  0077              
+ 353  0077              ;*************************************************************************************************************************************************
+ 354  0077              ;*************************************************************************************************************************************************
+ 355  0077              ;*************************************************************************************************************************************************
+ 356  0077              ;*************************************************************************************************************************************************
+ 357  0077              ;*************************************************************************************************************************************************
+ 358  0077              ;*************************************************************************************************************************************************
+ 359  0077              ;*************************************************************************************************************************************************
+ 360  0077              ;*************************************************************************************************************************************************
+ 361  0077              
+ 362  0077              
+ 363  0077              IFDEF   SIMCTL0
+ 364  0077                  #define SIMC0   SIMCTL0
+ 365  0077              endif
+ 366  0077              ifdef   IICC0
+ 367  0077                  #define SIMC0   IICC0
+ 368  0077              endif
+ 369  0077              
+ 370  0077              IFDEF   SIMAR
+ 371  0077                  #define SIMA    SIMAR
+ 372  0077              endif
+ 373  0077              IFDEF   IICA
+ 374  0077                  #define SIMA    IICA
+ 375  0077              endif
+ 376  0077              
+ 377  0077              IFDEF   SIMDR
+ 378  0077                  #define SIMD    SIMDR
+ 379  0077              endif
+ 380  0077              IFDEF   IICD
+ 381  0077                  #define SIMD    IICD
+ 382  0077              ENDIF
+ 383  0077              
+ 384  0077              IFDEF   ESIMI
+ 385  0077                  #define SIME    ESIMI
+ 386  0077              endif
+ 387  0077              IFDEF   IICE
+ 388  0077                  #define SIME    IICE
+ 389  0077              endif
+ 390  0077              
+ 391  0077              ifdef   IICF
+ 392  0077                  #define SIMF    IICF
+ 393  0077              ENDIF
+ 394  0077              
+ 395  0077              
+ 396  0077              ifdef   IICHTX
+ 397  0077                  #define HTX IICHTX
+ 398  0077              endif
+ 399  0077              ifdef   IICHAAS
+ 400  0077                  #define HAAS    IICHAAS
+ 401  0077              endif
+ 402  0077              ifdef   IICSRW
+ 403  0077                  #define SRW IICSRW
+ 404  0077              endif
+ 405  0077              ifdef   IICRXAK
+文件：HXT_Editor_V100.asm 编译器版本 2.98 页次8
+
+ 406  0077                  #define RXAK    IICRXAK
+ 407  0077              endif
+ 408  0077              ifdef   IICTXAK
+ 409  0077                  #define TXAK    IICTXAK
+ 410  0077              endif
+ 411  0077              
+ 412  0077              ifdef   IICRNIC
+ 413  0077                  #define RNIC    IICRNIC
+ 414  0077              ENDIF
+ 415  0077              
+ 416  0077              
+ 417  0077              
+ 418  0077              
+ 419  0077              
+ 420  0077              
+ 421  0077              RAMBANK 0 HXT_Editor_V100_RAM
+ 422  0000              HXT_Editor_V100_RAM       .SECTION  'DATA'
+ 423  0000  0002[       SIM_STACK       DB 2 DUP(?)
+            00
+            ]
+ 424  0002  00          bWrite1st       DBIT
+ 425  0003  00          IIC_DATA_OUT    DB      ?
+ 426  0004  00          IIC_DATA_IN DB      ?
+ 427  0005  00          IIC_DATA_INDEX  DB      ?
+ 428  0006  0002[       IIC_LibVer  DB  2   DUP(?)
+            00
+            ]
+ 429  0008              ;=====================================================================
+ 430  0008              
+ 431  0008              
+ 432  0008              
+ 433  0008              
+ 434  0008              
+ 435  0008              ;*********************************************************************
+ 436  0008              #define SlaveMode       HTX
+ 437  0008              #define AddrMatch       HAAS
+ 438  0008              #define MasterRead  SRW
+ 439  0008              #define SlaveRecAck RXAK
+ 440  0008              DUMMY_READ  macro
+ 441  0008                      MOV A,SIMD      ;DUMMY READ
+ 442  0008                      endm
+ 443  0008              SLAVE_SEND_ACK  macro           ;enable transmits acknowledge
+ 444  0008                      CLR TXAK
+ 445  0008                      endm
+ 446  0008              Slave_Tx_Mode   macro
+ 447  0008                      set SlaveMode
+ 448  0008                      endm
+ 449  0008              Slave_Rx_Mode   macro           ;receive mode (master write)
+ 450  0008                      clr SlaveMode
+ 451  0008                      endm
+ 452  0008              
+ 453  0008              IF_AddrNotMatch_GOTO    macro   addr
+ 454  0008                      SNZ AddrMatch       ;0:read/write data 1:address match
+ 455  0008                      JMP addr
+ 456  0008                      endm
+ 457  0008              
+ 458  0008              IF_WriteData_GOTO   macro   addr
+ 459  0008                      SNZ MasterRead  ;0:master wants to write data 1:master wants to read data
+ 460  0008                      JMP addr
+ 461  0008                      endm
+文件：HXT_Editor_V100.asm 编译器版本 2.98 页次9
+
+ 462  0008              
+ 463  0008              IF_Master_Read_GOTO macro   addr
+ 464  0008                      SZ  SlaveMode
+ 465  0008                      JMP addr
+ 466  0008                      endm
+ 467  0008              IF_ACK_GOTO macro   addr
+ 468  0008                      SNZ SlaveRecAck
+ 469  0008                      JMP addr
+ 470  0008                      endm
+ 471  0008              
+ 472  0008              ;*********************************************************************
+ 473  0000              IIC_INT_CODE   .SECTION  AT IIC_INT_ADDR 'CODE'
+ 474  0000                      CHECK_SIMF
+ 475  0000  3612                CLR     SIMF
+ 476  0001  2800     R          JMP     SIM_INT
+ 477  0002              
+ 478  0000              HXT_Editor_V100_CODE    .SECTION  'CODE'
+ 479  0000              IIC_INITIAL PROC
+ 480  0000              ;JMP    IIC_WRITE_ENTRY
+ 481  0000              ;jmp    IIC_PRE_READ
+ 482  0000              
+ 483  0000  3340                SET     IIC_SDA_PU
+ 484  0001  33C0                SET     IIC_SCL_PU
+ 485  0002                      ;--
+ 486  0002  0FC2                MOV     A,11000010B ;I2C Mode ,Enable SIM
+ 487  0003  00A3                MOV     SIMC0,A
+ 488  0004              
+ 489  0004              
+ 490  0004  0FA0                MOV     A,IIC_ADDRESS
+ 491  0005  00A6                MOV     SIMA,A
+ 492  0006              
+ 493  0006  3624                CLR     HTX
+ 494  0007  35A4                CLR     TXAK
+ 495  0008  30A4                SET     RNIC
+ 496  0009                      ;--
+ 497  0009  3612                CLR     SIMF        ;Clear SIM interrupt request flag
+ 498  000A              
+ 499  000A  0FBF                MOV     A,10111111B ;Enable I2C Time-out Countrol
+ 500  000B  00A7                MOV     I2CTOC,A              ;I2C time-out time is 64*32/32K = 62.5mSec
+ 501  000C              
+ 502  000C  3012                SET     SIME
+ 503  000D              	INIT_IIC_IO
+ 504  000D  0003                RET
+ 505  000E              IIC_INITIAL ENDP
+ 506  000E              
+ 507  000E              
+ 508  000E              
+ 509  000E              
+ 510  000E              
+ 511  000E              
+ 512  000E              
+ 513  000E              ;*******************************************************************
+ 514  000E              _HXT_Editor_V100:
+ 515  000E  3F27                SZ      I2CTOF
+ 516  000F  2000     R          CALL    IIC_INITIAL
+ 517  0010  0003                RET
+ 518  0011              ;*******************************************************************
+ 519  0011              
+ 520  0011              
+ 521  0011              ;*******************************************************************
+文件：HXT_Editor_V100.asm 编译器版本 2.98 页次10
+
+ 522  0011              _HXT_Editor_V100_INITIAL:
+ 523  0011  2000     R          CALL    IIC_INITIAL
+ 524  0012  2000     E          CALL    _GET_LIB_VER
+ 525  0013  0080     R          MOV     IIC_LibVer[1],A
+ 526  0014  0700     E          MOV     A,_DATA_BUF[0]
+ 527  0015  0080     R          MOV     IIC_LibVer[0],A
+ 528  0016  0003                RET
+ 529  0017              ;*******************************************************************
+ 530  0017              
+ 531  0017              
+ 532  0017              
+ 533  0017              
+ 534  0017              
+ 535  0017              
+ 536  0017              
+ 537  0017              
+ 538  0017              
+ 539  0017              
+ 540  0017              
+ 541  0017              
+ 542  0017              ;;***********************************************************
+ 543  0017              ;;*SUB. NAME:                                               *
+ 544  0017              ;;*INPUT    :                                               *
+ 545  0017              ;;*OUTPUT   :                                               *
+ 546  0017              ;;*USED REG.:                                               *
+ 547  0017              ;;*FUNCTION :                                               *
+ 548  0017              ;;***********************************************************
+ 549  0017                              ;;*******************
+ 550  0017              SIM_INT:        ;;* SIM INT. ********
+ 551  0017                              ;;*******************
+ 552  0017  3612                CLR     SIMF
+ 553  0018                      ;-PUSH DATA
+ 554  0018  0080     R          MOV     SIM_STACK[0],A
+ 555  0019  070A                MOV     A,STATUS
+ 556  001A  0080     R          MOV     SIM_STACK[1],A
+ 557  001B              
+ 558  001B                      ;-CHECK IF ADDRESS MATCH
+ 559  001B                      IF_AddrNotMatch_GOTO    IIC_CONTINUE_RW
+ 560  001D                      IF_WriteData_GOTO   FIRST_WRITE
+ 561  001F                      ;-FIRST READ (PREPARE DATA)
+ 562  001F                      Slave_Tx_Mode
+ 563  0020  2800     R          JMP     IIC_CONTINUE_READ
+ 564  0021                  IIC_CONTINUE_RW:
+ 565  0021                      IF_Master_Read_GOTO IIC_MASTER_READ
+ 566  0023                      ;-MASTER WRITE
+ 567  0023  0725                MOV     A,SIMD
+ 568  0024  0080     R          MOV     IIC_DATA_IN,A
+ 569  0025  3C00     R          SZ      bWrite1st
+ 570  0026              ;;;;;        JMP IIC_WRITE_ENTRY
+ 571  0026  2800     R          JMP     _ENDIIC
+ 572  0027              
+ 573  0027  0080     R          MOV     IIC_DATA_INDEX,A    ;-GET 1ST BYTE (ADDRESS)
+ 574  0028  3000     R          SET     bWrite1st
+ 575  0029  2800     R          JMP     IIC_PRE_READ    ;PR-READ DATA
+ 576  002A                  FIRST_WRITE:
+ 577  002A  3400     R          CLR     bWrite1st
+ 578  002B  2800     R          JMP     SIM_RECEIVE_MODE
+ 579  002C                  IIC_MASTER_READ:
+ 580  002C                      IF_ACK_GOTO IIC_CONTINUE_READ
+ 581  002E                      ;NACK
+文件：HXT_Editor_V100.asm 编译器版本 2.98 页次11
+
+ 582  002E                  SIM_RECEIVE_MODE:
+ 583  002E                      Slave_Rx_Mode       ;receive mode (master write)
+ 584  002F                      SLAVE_SEND_ACK      ;enable transmits acknowledge
+ 585  0030                      DUMMY_READ
+ 586  0031                  _ENDIIC:
+ 587  0031  0700     R          MOV     A,SIM_STACK[1]
+ 588  0032  008A                MOV     STATUS,A
+ 589  0033  0700     R          MOV     A,SIM_STACK[0]
+ 590  0034  0004                RETI
+ 591  0035              ;*******************************************************************
+ 592  0035              IIC_CONTINUE_READ:
+ 593  0035  0700     R          MOV     A,IIC_DATA_OUT
+ 594  0036  00A5                MOV     SIMD,A
+ 595  0037  1480     R          INC     IIC_DATA_INDEX
+ 596  0038  2800     R          JMP     IIC_PRE_READ
+ 597  0039              ;*******************************************************************
+ 598  0039              message '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - '
+
+
+        0 Errors, 0 Warnings

@@ -1,0 +1,131 @@
+
+连接器　版本8.7.7.190806
+Input Object File: C:\Users\15195\AppData\Local\Temp\BS86D12C_LIBV413.OBJ
+Input Object File: c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\MAIN_PROGRAM_V103.OBJ
+Input Object File: c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\HXT_EDITOR_V100.OBJ
+Input Object File: c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\USER_PROGRAM.OBJ
+Input Object File: c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\STARTUP1_L.OBJ
+
+Input Library File: D:\HT-IDE3000V8.x\LIB\LIBHOLTEKGCC.LIB
+Input Library File: D:\HT-IDE3000V8.x\LIB\v3_lmrsc.lib
+
+
+     Bank    Start     End      Length     Class    AvgIns    Name
+     00h     0000h     0003h    0004h      CODE               PROGRAM_ENTRY (c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\MAIN_PROGRAM_V103.OBJ)
+     00h     0004h     0007h    0004h      CODE               _USER_PROGRAM_INITIAL (c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\USER_PROGRAM.OBJ)
+     00h     0008h     0008h    0001h      CODE               TOUCH_INT (C:\Users\15195\AppData\Local\Temp\BS86D12C_LIBV413.OBJ)
+     00h     0009h     0009h    0001h      CODE               LIBRARY_VERSION (C:\Users\15195\AppData\Local\Temp\BS86D12C_LIBV413.OBJ)
+     00h     000ch     000fh    0004h      CODE               TIME_BASE_INT (C:\Users\15195\AppData\Local\Temp\BS86D12C_LIBV413.OBJ)
+     00h     0010h     0018h    0009h      CODE               _USER_PROGRAM (c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\USER_PROGRAM.OBJ)
+     00h     0020h     0021h    0002h      CODE               IIC_INT_CODE (c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\HXT_EDITOR_V100.OBJ)
+     00h     0022h     04dah    04b9h      CODE               TKS_LIBRARY_CODE (C:\Users\15195\AppData\Local\Temp\BS86D12C_LIBV413.OBJ)
+     00h     04dbh     0542h    0068h      CODE               MAIN_PROGRAM (c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\MAIN_PROGRAM_V103.OBJ)
+     00h     0543h     05b9h    0077h      CODE               IIC_SLAVE_TEST_RW_CODE (c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\HXT_EDITOR_V100.OBJ)
+     00h     05bah     05f2h    0039h      CODE               HXT_EDITOR_V100_CODE (c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\HXT_EDITOR_V100.OBJ)
+     00h     0080h     00a9h    002ah      DATA     0.4761    TKS_LIBRARY_DATA0 (C:\Users\15195\AppData\Local\Temp\BS86D12C_LIBV413.OBJ)
+     00h     00aah     00abh    0002h      DATA     3         MAIN_DATA (c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\MAIN_PROGRAM_V103.OBJ)
+     00h     00ach     00adh    0002h      DATA     2         IIC_SLAVE_TEST_RW_RAM (c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\HXT_EDITOR_V100.OBJ)
+     00h     00aeh     00b5h    0008h      DATA     4.625     HXT_EDITOR_V100_RAM (c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\HXT_EDITOR_V100.OBJ)
+     01h     0080h     00d3h    0054h      DATA     0         TKS_LIBRARY_DATA1 (C:\Users\15195\AppData\Local\Temp\BS86D12C_LIBV413.OBJ)
+     02h     0080h     00afh    0030h      DATA     0         TKS_LIBRARY_DATA2 (C:\Users\15195\AppData\Local\Temp\BS86D12C_LIBV413.OBJ)
+
+
+     Indepentent Local Sections
+
+     Bank    Start     End      Length     Class    AvgIns    Name
+     00h     00b6h     00b6h    0000h      ILOCAL   0         IIC_PRE_READ (c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\HXT_EDITOR_V100.OBJ)
+     00h     00b6h     00b6h    0000h      ILOCAL   0         IIC_INITIAL (c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\HXT_EDITOR_V100.OBJ)
+     01h     00d4h     00d4h    0000h      ILOCAL   0         _USER_PROGRAM_INITIAL (c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\USER_PROGRAM.OBJ)
+     01h     00d4h     00d4h    0000h      ILOCAL   0         _USER_PROGRAM (c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\USER_PROGRAM.OBJ)
+
+     Public Symbols Information
+     Address            Public by Name
+     00a9h[3]           _ANY_KEY_PRESSF
+     0022h              _BS86D12C_LIBV413
+     00ach              _BS86D12C_LIBV413_INITIAL
+     0137h              _CHECK_KEY_WAKEUP
+     008fh              _DATA_BUF
+     00a9h[0]           _FORCE_CALIBRATEF
+     04c3h              _GET_ENV_VALUE
+     04b9h              _GET_KEY_AMOUNT
+     04bbh              _GET_KEY_BITMAP
+     04b4h              _GET_LIB_VER
+     04c0h              _GET_RCC_VALUE
+     04c6h              _GET_REF_VALUE
+     0080h              _GLOBE_VARIES
+     05c8h              _HXT_EDITOR_V100
+     05cbh              _HXT_EDITOR_V100_INITIAL
+     009ch              _KEY_DATA
+     009ah              _KEY_IO_SEL
+     01a4h              _KEY_REF
+     0180h              _KEY_STATUS
+     00ach              _LIBRARY_RESET
+     0520h              _LOAD_HXT_REFERENCE
+     0520h              _LOAD_TKS_GLOBE_VARIES
+     0097h              _SAMPLE_TIMES
+     00a9h[2]           _SCAN_CYCLEF
+     0098h              _STANDBY_TIME
+     00a9h[5]           _TKS_250MSF
+     00a9h[6]           _TKS_500MSF
+     00a9h[4]           _TKS_63MSF
+     00a9h[1]           _TKS_ACTIVEF
+     00a9h              _TKS_FLAGA
+     0099h              _TKS_TIME_BASE
+     0010h              _USER_PROGRAM
+     0004h              _USER_PROGRAM_INITIAL
+
+     Address            Public by Value
+     0004h              _USER_PROGRAM_INITIAL
+     0010h              _USER_PROGRAM
+     0022h              _BS86D12C_LIBV413
+     0080h              _GLOBE_VARIES
+     008fh              _DATA_BUF
+     0097h              _SAMPLE_TIMES
+     0098h              _STANDBY_TIME
+     0099h              _TKS_TIME_BASE
+     009ah              _KEY_IO_SEL
+     009ch              _KEY_DATA
+     00a9h              _TKS_FLAGA
+     00ach              _BS86D12C_LIBV413_INITIAL
+     00ach              _LIBRARY_RESET
+     0137h              _CHECK_KEY_WAKEUP
+     0180h              _KEY_STATUS
+     01a4h              _KEY_REF
+     04b4h              _GET_LIB_VER
+     04b9h              _GET_KEY_AMOUNT
+     04bbh              _GET_KEY_BITMAP
+     04c0h              _GET_RCC_VALUE
+     04c3h              _GET_ENV_VALUE
+     04c6h              _GET_REF_VALUE
+     0520h              _LOAD_HXT_REFERENCE
+     0520h              _LOAD_TKS_GLOBE_VARIES
+     00a9h[0]           _FORCE_CALIBRATEF
+     00a9h[1]           _TKS_ACTIVEF
+     00a9h[2]           _SCAN_CYCLEF
+     00a9h[3]           _ANY_KEY_PRESSF
+     00a9h[4]           _TKS_63MSF
+     00a9h[5]           _TKS_250MSF
+     00a9h[6]           _TKS_500MSF
+     05c8h              _HXT_EDITOR_V100
+     05cbh              _HXT_EDITOR_V100_INITIAL
+
+
+ROM Usage Statistics
+     Size      Used     Percentage
+     2000h     05eah    18%
+
+RAM Usage Statistics
+    Bank      Size      Used     Percentage
+     00h       0080h     0036h    42%
+     01h       0080h     0054h    65%
+     02h       0080h     0030h    37%
+     03h       0080h     0000h    0%
+     Total     0200h     00bah    36%
+
+Use Stack Count
+
+Call Tree
+
+HLINK : 程序的开始执行点在程序段'PROGRAM_ENTRY'（地址0）。定义在'c:\users\15195\desktop\workspace\simplekeylock20210301\bs86d12c_20180123_libv413-v3\bs86d12c_20180123_libv413\OUTPUT\MAIN_PROGRAM_V103.OBJ' 文件中
+
+错误总数 : 0  警告总数 : 0
